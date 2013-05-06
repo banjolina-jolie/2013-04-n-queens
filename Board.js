@@ -58,10 +58,25 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
+      // debugger;;
+      var rows = this.rows();
+      var counter = 0;
+      for (var i = 0; i < rows.length; i++) {
+        if(rows[i]) {counter++;}
+      }
+      if(counter > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     hasAnyRowConflicts: function(){
+      var n = this.get('n');
+      for (var i = 0; i < n; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
