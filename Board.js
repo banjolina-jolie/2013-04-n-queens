@@ -59,7 +59,7 @@
 
     hasRowConflictAt: function(rowIndex){
       // debugger;;
-      var rows = this.rows();
+      var rows = this.rows()[rowIndex];
       var counter = 0;
       for (var i = 0; i < rows.length; i++) {
         if(rows[i]) {counter++;}
