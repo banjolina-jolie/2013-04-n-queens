@@ -58,7 +58,6 @@
     // todo: fill in all these functions - they'll help you!
 
     hasRowConflictAt: function(rowIndex){
-      // debugger;;
       var rows = this.rows()[rowIndex];
       var counter = 0;
       for (var i = 0; i < rows.length; i++) {
@@ -67,7 +66,7 @@
       if(counter > 1) {
         return true;
       }
-      return false; // fixme
+      return false;
     },
 
     hasAnyRowConflicts: function(){
@@ -77,31 +76,73 @@
           return true;
         }
       }
-      return false; // fixme
+      return false;
     },
 
     hasColConflictAt: function(colIndex){
-      return false; // fixme
+      var rows = this.rows();
+      var counter = 0;
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i][colIndex]) {counter++;}
+      }
+      if(counter > 1) {
+        return true;
+      }
+      return false;
     },
 
     hasAnyColConflicts: function(){
-      return false; // fixme
+      var n = this.get('n');
+      for (var i = 0; i < n; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var rows = this.rows();
+      var counter = 0;
+
+      for (var i = 0; i < rows.length; i++) {
+        if(rows[i][majorDiagonalColumnIndexAtFirstRow+i]) {
+          counter++;
+        }
+      }
+      if(counter > 1){return true;}
+      return false;
     },
 
     hasAnyMajorDiagonalConflicts: function(){
-      return false; // fixme
+      var n = this.get('n');
+
+      for(var i = (-n + 2); i < n; i++) {
+        if(this.hasMajorDiagonalConflictAt(i)) {return true;}
+      }
+      return false;
     },
 
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      var rows = this.rows();
+      var counter = 0;
+
+      for (var i = 0; i < rows.length; i++) {
+        if(rows[i][minorDiagonalColumnIndexAtFirstRow-i]) {
+          counter++;
+        }
+      }
+      if(counter > 1){return true;}
+      return false;
     },
 
     hasAnyMinorDiagonalConflicts: function(){
-      return false; // fixme
+      var n = this.get('n');
+
+      for(var i = 0; i < (n + 2); i++) {
+        if(this.hasMinorDiagonalConflictAt(i)) {return true;}
+      }
+      return false;
     }
 
   });
