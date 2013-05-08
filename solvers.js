@@ -9,29 +9,104 @@ window.findNRooksSolution = function(n){
     nestedArr[i] = 1;
     solution.push(nestedArr);
   }
-
-  console.log('Single solution for ' + n + ' rooks:', solution);
+  // console.log('Single solution for ' + n + ' rooks:', solution);
   return solution;
+
+
 };
 
 window.countNRooksSolutions = function(n){
-  var solutionCount; //fixme
+  var solutionCount = 0;
+  var makeEmptyMatrix = function(n){
+    return _(_.range(n)).map(function(){
+      return _(_.range(n)).map(function(){
+        return 0;
+      });
+    });
+  };
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+  var traverse = function(placements){
+    if(placements.length === n) {
+      if(! new Board(makeMatrix(placements)).hasAnyRooksConflicts()) {
+        solutionCount++;
+      }
+      return;
+    }
+    for(var i = 0; i < n; i++) {
+      traverse(placements.concat([i]));
+    }
+  };
+
+  traverse([]);
+
+  // console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+
   return solutionCount;
 };
 
 window.findNQueensSolution = function(n){
-  var solution; //fixme
+  var solution = [[1]];
+  var traverse = function(placements){
+    if(placements.length === n) {
+      if(! new Board(makeMatrix(placements)).hasAnyQueensConflicts()){
+        solution = makeMatrix(placements);
+      }
+    }
+    if(solution) return;
+    for(var i = 0; i < n; i++) {
+      traverse(placements.concat([i]));
+      console.log("in the loop");
+    }
+  };
+  traverse([]);
 
-  console.log('Single solution for ' + n + ' queens:', solution);
+  console.log(solution);
   return solution;
+
+  // console.log('Single solution for ' + n + ' queens:', solution);
+};
+
+window.makeMatrix = function(placements){
+  // convert this: [0,2,1]
+  // to this: [
+  //   [1,0,0],
+  //   [0,0,1],
+  //   [0,1,0]
+  // ]
+  var makeEmptyMatrix = function(n){
+    return _(_.range(n)).map(function(){
+      return _(_.range(n)).map(function(){
+        return 0;
+      });
+    });
+  };
+
+  var matrix = makeEmptyMatrix(placements.length);
+
+  for(var i = 0; i < placements.length; i++) {
+    if(placements[i] !== undefined){
+      matrix[i][placements[i]] = 1;
+    }
+  }
+  return matrix;
+
 };
 
 window.countNQueensSolutions = function(n){
-  var solutionCount; //fixme
-
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  var solutionCount = 0;
+  var traverse = function(placements){
+    if(placements.length === n) {
+      if(! new Board(makeMatrix(placements)).hasAnyQueensConflicts()){
+        solutionCount++;
+      }
+      return;
+    }
+    for(var i = 0; i < n; i++) {
+      traverse(placements.concat([i]));
+    }
+  };
+  traverse([]);
+  // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
 

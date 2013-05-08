@@ -70,13 +70,17 @@
     },
 
     hasAnyRowConflicts: function(){
-      var n = this.get('n');
-      for (var i = 0; i < n; i++) {
-        if (this.hasRowConflictAt(i)) {
-          return true;
-        }
-      }
-      return false;
+      // var n = this.get('n');
+      // for (var i = 0; i < n; i++) {
+      //   if (this.hasRowConflictAt(i)) {
+      //     return true;
+      //   }
+      // }
+      // return false;
+
+      return _.reduce(this.rows(), function(memo, row, rowIndex){
+        return memo || this.hasRowConflictAt(rowIndex);
+      }, false, this);
     },
 
     hasColConflictAt: function(colIndex){
